@@ -1,5 +1,6 @@
 package com.softbank.websocket.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.*;
@@ -8,9 +9,12 @@ import org.springframework.web.socket.config.annotation.*;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+  @Value("${application.domain}")
+  private String DOMAIN;
+
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/ws").setAllowedOrigins("https://chat-app-production-2312.up.railway.app")
+    registry.addEndpoint("/ws").setAllowedOrigins(DOMAIN)
             .withSockJS();
   }
 
